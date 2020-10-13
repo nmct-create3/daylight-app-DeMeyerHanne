@@ -8,8 +8,20 @@
 
 :root {
     /* colors */
+    --color-front: #0F3557;
+    --color-back: #CCE7FF;
+    --color-logo: #0F3557;
 
+    --color-alpha:  #0F3557;
+    --color-beta: #CCE7FF;
+
+    --global-background-color: var(--color-back);
+    --global-text-color: var(--color-front);
+    --global-color-logo-fill: var(--color-logo);
+    
+    --global-border-color: #0F3557;
     /* opacity */
+    --global-muted-opacity: 0.6;
 
     /* transitions */
 }
@@ -25,12 +37,23 @@
 */
 
 html {
-    font-size: 16px;
-    line-height: 1.5;
-    font-family: Helvetica, arial, sans-serif;
+    /* positioning */
+
+    /* box model */
     box-sizing: border-box;
+
+        /* font */
+    color: var(--global-text-color);
+    font-size: 16px;   /* 1 rem = body font size*/
+    line-height: 1.5;
+    font-family: 'Work Sans', Helvetica,arial, sans-serif;
+    /* zero is key en dan waarde1 of true */
+    font-feature-settings: "zero" 1;  
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+
+    /* appearance */
+    background: var(--global-background-color);
 }
 
 *,
@@ -249,7 +272,11 @@ input::placeholder {
 */
 
 .c-logo {
-
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1rem;
+    display: flex;
+    align-items: center;
 }
 
 /*
@@ -259,11 +286,13 @@ input::placeholder {
 */
 
 .c-sun {
-
+    width: 1.375rem;
+    height: 1.375rem;
+    fill: var(--global-color-logo-fill);
 }
 
 .c-logo .c-sun {
-
+    margin-right: 0.5rem; 
 }
 
 /*
@@ -271,12 +300,93 @@ input::placeholder {
     ---
     Main app wrapper
 */
+.c-app { /* gaat niet over hele pagina, maar breedte van daylight, zon... */
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 2 * 1rem);     /* 2 * 1rem vanaf halen want das de boven en onder padding */
+    box-sizing: content-box;  /* max width + 1rem + 2 rem + 1rem + 2rem = 29rem totaal */ /* gaat padding optellen bij de max width ipv het toevoegen aan de binnenkant */
+    max-width: 25rem;
+    margin: 0 auto; /* om te centreren */
+    padding: 1rem 2rem;  /* 2rem = 2 * root fontsize 16px */
+    /* background: hotpink; */
+}
+
+.c-app__summary {
+    font-size: 1.75rem; /* 28/16 */
+    line-height: 2.5rem;  /* 40/16 */
+}
+
 
 /*
     Component: Horizon
     ---
     Horizon with sun visualisation
 */
+.c-horizon {
+    margin-top: auto; /* in .c-app een display flex en flex-direction: column; geven. Veranderd opzich niets tot je deze margin op auto gaat zetten. vul bovenkant automatisch op */
+}
+
+.c-horizon__sky-wrapper {
+    position: relative;
+    height: 12.5rem;
+    overflow: hidden;  /* de zon gaat onder de lijn, maar dat ga je niet zien want staat op hidden */
+    padding-top: 1.375rem;
+    padding-right: 2.5rem;
+}
+
+.c-horizon__sky {
+    position: relative;
+    height: 100%;
+}
+
+.c-horizon__sun {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 2.5rem;
+    
+    font-size: 0.75rem;
+    line-height: 0.875rem;
+
+    transform: translateY(50%);  /* 22px in doc, beter percentage van maken */
+}
+
+.c-horizon__sun::before {
+    content: attr(data-time);
+    font-size: 0.75rem;
+    line-height: 0.875rem;
+    display: block;
+    margin-bottom: 0.5rem;
+    text-align: center;
+} 
+
+.c-horizon__line {
+    display: flex;
+    justify-content: space-between;
+
+    margin-bottom: 2.5rem;
+    padding-top: 0.625rem;
+
+    border-top: 1px solid var(--global-border-color);
+    
+}
+
+.c-horizon__time {
+    font-size: 0.75rem;
+    line-height: 0.875rem;
+}
+
+.c-horizon__time-begin {
+
+}
+
+.c-horizon__time-end {
+    
+}
+
+
 
 /*------------------------------------*\
 #UTILITIES
@@ -286,6 +396,9 @@ input::placeholder {
     Utilities: Mute
     Mute with opacity
 */
+.u-muted {
+    opacity: var(--global-muted-opacity);
+}
 
 /*------------------------------------*\
 #STATES
@@ -296,6 +409,11 @@ input::placeholder {
 */
 
 /* Night version: just switch the light and dark vars */
+.is-night {
+    --color-front: var(--color-beta);
+    --color-back: var(--color-alpha);
+
+}
 
 /*------------------------------------*\
 #MEDIA

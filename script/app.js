@@ -41,6 +41,7 @@ let showResult = queryResponse => {
 // 2 Aan de hand van een longitude en latitude gaan we de yahoo wheater API ophalen.
 let getAPI = (lat, lon) => {
 	// Eerst bouwen we onze url op
+	
 	// Met de fetch API proberen we de data op te halen.
 	// Als dat gelukt is, gaan we naar onze showResult functie.
 };
